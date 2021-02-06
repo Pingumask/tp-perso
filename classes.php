@@ -10,6 +10,7 @@ class Arme{
 }
 
 class Perso{
+    public $nom;
     public $image;
     public $force;
     public $pvmax;
@@ -19,14 +20,15 @@ class Perso{
     public $nbPotions;
     
 
-    public function __construct(Arme $arme, int $force=10, int $pvmax=200, int $nbPotions=0, String $image="default"){
+    public function __construct(String $nom, Arme $arme, int $force=10, int $pvmax=200, int $nbPotions=0, String $image="default"){
+        $this->nom = $nom;
+        $this->arme = $arme;
         $this->force = $force;
         $this->pvmax = $pvmax;
         $this->pv = $pvmax;
-        $this->arme = $arme;
-        $this->armure = new Armure("",0);
         $this->nbPotions=$nbPotions;
         $this->image=$image;
+        $this->armure = new Armure("",0);
     }
 
     public function attaque(Perso $cible):int{
@@ -61,36 +63,6 @@ class Armure{
     public function __construct(string $nom, int $niveau){
         $this->nom = $nom;
         $this->niveau=$niveau;
-    }
-}
-
-class Sayajin extends Perso{
-    public $transforme=false;
-
-    public function ssj1(){
-        $this->transformation();
-    }
-
-    public function ssj2(){
-        $this->transformation();
-        $this->force*=1.5;
-    }
-
-    public function ssj3(){
-        $this->transformation();
-        $this->force*=2;
-    }
-
-    private function transformation(){
-        $this->transforme=true;
-    }
-
-    public function attaque(Perso $cible):int{
-        $degats = parent::attaque($cible);        
-        if($this->transforme){
-            $degats+=parent::attaque($cible);
-        }
-        return $degats;
     }
 }
 
