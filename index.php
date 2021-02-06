@@ -8,11 +8,11 @@
         <script src="combat.js" defer></script>
     </head>
     <body>
-        <h1>TP class perso</h1>
+        <h1>VS</h1>
         <div class="actions">
             <?php include('combat.php');
-            foreach($actions as $action){
-                echo "<div class=\"action $action->type\"><img src=\"persos/".$action->perso->image.".png\" alt=\"".$action->perso->image."\" />$action->texte</div>";
+            foreach($actions as $key=>$action){
+                printf('<div id="action%d" class="action %s"><img src="persos/%s.png" alt="%s" />%s</div>', $key, $action->type, $action->perso->image,$action->perso->image,$action->texte) ;
             }
             ?>
         </div>
