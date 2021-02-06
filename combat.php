@@ -9,8 +9,8 @@ $brigandine= new Armure("Brigandine", 30);
 //tirer une armure au hazard quand le personnage tape à plus de 70
 
 $faucheuse= new Perso("La mort",new Arme("Faux",0));
-$gentil = new Perso("Goku",$epee,50,500,3,"goku");
-$mechant = new Perso("Freeza",new Arme("Arc", 60),70,400,1,"freeza");
+$gentil = new Perso("Goku",$epee,50,500,3,"goku","goku");
+$mechant = new Perso("Freeza",new Arme("Arc", 60),70,400,1,"freeza","freeza");
 
 $actions=[];
 

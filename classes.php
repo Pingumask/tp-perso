@@ -11,7 +11,8 @@ class Arme{
 
 class Perso{
     public $nom;
-    public $image;
+    public $miniature;
+    public $portrait;
     public $force;
     public $pvmax;
     public $pv;
@@ -20,14 +21,15 @@ class Perso{
     public $nbPotions;
     
 
-    public function __construct(String $nom, Arme $arme, int $force=10, int $pvmax=200, int $nbPotions=0, String $image="default"){
+    public function __construct(String $nom, Arme $arme, int $force=10, int $pvmax=200, int $nbPotions=0, String $miniature="default", String $portrait="default"){
         $this->nom = $nom;
         $this->arme = $arme;
         $this->force = $force;
         $this->pvmax = $pvmax;
         $this->pv = $pvmax;
         $this->nbPotions=$nbPotions;
-        $this->image=$image;
+        $this->miniature=$miniature;
+        $this->portrait=$portrait;
         $this->armure = new Armure("",0);
     }
 
