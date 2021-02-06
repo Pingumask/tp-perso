@@ -1,0 +1,36 @@
+.action {
+	display: none;
+}
+
+.action img {
+	max-height: 50px;
+}
+
+.soin {
+	background: rgb(100, 151, 100);
+}
+
+.attaque {
+	background: rgb(156, 109, 109);
+}
+
+.resultat {
+	background: gray;
+}
+
+.equipement {
+	background: lightgray;
+}
+
+.fin {
+	font-size: 3em;
+	font-weight: bold;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
