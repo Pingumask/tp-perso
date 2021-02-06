@@ -1,14 +1,17 @@
-const actions = document.querySelectorAll('.action');
+const ACTIONS = document.querySelectorAll('.action');
+const DELAI = 750;
+const NBACTIONS = 5;
+const DELAI_DISPARITION = DELAI * NBACTIONS;
 
-actions.forEach((action, key) => {
-	console.log(action);
+ACTIONS.forEach((action, key) => {
+	const APPARITION = DELAI * key;
 	setTimeout(() => {
 		afficherAction(action);
-	}, 600 * key);
-	if (key < actions.length - 5) {
+	}, APPARITION);
+	if (key < ACTIONS.length - 1 - NBACTIONS) {
 		setTimeout(() => {
 			cacherAction(action);
-		}, 600 * key + 2400);
+		}, APPARITION + DELAI_DISPARITION);
 	}
 });
 
