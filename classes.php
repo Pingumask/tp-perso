@@ -17,13 +17,15 @@ class Perso{
     public $pvmax;
     public $pv;
     public $arme;
+    public $armeSecondaire;
     public $armure;
     public $nbPotions;
     
 
-    public function __construct(String $nom, Arme $arme, int $force=10, int $pvmax=200, int $nbPotions=0, String $miniature="default", String $portrait="default"){
+    public function __construct(String $nom, Arme $arme, Arme $armeSecondaire=null, int $force=10, int $pvmax=200, int $nbPotions=0, String $miniature="default", String $portrait="default"){
         $this->nom = $nom;
         $this->arme = $arme;
+        $this->armeSecondaire = $armeSecondaire;
         $this->force = $force;
         $this->pvmax = $pvmax;
         $this->pv = $pvmax;
@@ -34,7 +36,7 @@ class Perso{
     }
 
     public function attaque(Perso $cible):int{
-        $degats = rand($this->force,$this->arme->degats) - $cible->armure->niveau;
+        $degats = rand($this->force,$this->force+$this->arme->degats) - $cible->armure->niveau;
         if ($degats <5){
             $degats = 5;
         }
@@ -46,7 +48,7 @@ class Perso{
     }
 
     public function utiliserPotion():int{
-        $potion = ceil($this->pvmax/10);
+        $potion = ceil($this->pvmax/5);
         $this->pv += $potion;
         $this->nbPotions = $this->nbPotions - 1;
         return $potion;
@@ -58,6 +60,17 @@ class Perso{
 
     public function changerArmure(Armure $nouvelleArmure){
         $this->armure = $nouvelleArmure;
+    }
+
+    public function jouerSonTour($cible){
+        if ($this->pv < $this->pvmax/3 && $this->arme != $this->armeSecondaire && $this->armeSecondaire!==null){
+            $this->changerArme($this->armeSecondaire);
+            return new Action($this, "equipement", "$this->nom change d'arme pour : ".$this->armeSecondaire->nom);
+        }
+        if($this->nbPotions>0 && $this->pv < $this->pvmax/2){
+            return new Action($this, "soin", "$this->nom utilise une potion et récupére ".$this->utiliserPotion()." points de vie.");
+        }
+        return new Action($this, "attaque", sprintf('%s attaque %s avec %s et inflige %d dégats',$this->nom, $cible->nom, $this->arme->nom, $this->attaque($cible)));       
     }
 }
 
