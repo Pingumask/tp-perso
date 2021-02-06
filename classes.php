@@ -37,6 +37,9 @@ class Perso{
             $degats = 5;
         }
         $cible->pv -= $degats;
+        if ($cible->pv<0){
+            $cible->pv=0;
+        }
         return $degats;
     }
 
