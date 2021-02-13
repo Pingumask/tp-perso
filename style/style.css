@@ -89,3 +89,14 @@ figcaption {
 	color: white;
 	font-size: 4em;
 }
+
+select {
+	background: black;
+	color: white;
+	border: none;
+	font-size: 5vh;
+}
+
+option {
+	font-size: 2vh;
+}

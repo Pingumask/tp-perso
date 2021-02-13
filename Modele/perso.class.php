@@ -1,13 +1,8 @@
 <?php
-class Arme{
-    public $nom;
-    public $degats;
-
-    public function __construct(string $nom, int $degats){
-        $this->nom=$nom;
-        $this->degats=$degats;
-    }
-}
+require_once("pdo.php");
+require_once("arme.class.php");
+require_once("armure.class.php");
+require_once("action.class.php");
 
 class Perso{
     public $nom;
@@ -21,8 +16,18 @@ class Perso{
     public $armure;
     public $nbPotions;
     
+    public function persoFromDb(int $id){
+        $prepared = $GLOBALS['database']->prepare("SELECT * FROM perso WHERE id_perso=:id");
+        $prepared->execute(array(":id"=>$id));
+        $perso = $prepared->fetch();
+        $arme=new Arme();
+        $arme->armeFromDb($perso['arme']);
+        $armeSecondaire=new Arme();
+        $armeSecondaire->armeFromDb($perso['armeSecondaire']);
+        $this->createPerso($perso['nom'], $arme, $armeSecondaire, $perso['force'], $perso['pvmax'], $perso['nbPotions'], $perso['miniature'], $perso['portrait']);
+    }
 
-    public function __construct(String $nom, Arme $arme, Arme $armeSecondaire=null, int $force=10, int $pvmax=200, int $nbPotions=0, String $miniature="default", String $portrait="default"){
+    public function createPerso(String $nom, Arme $arme, Arme $armeSecondaire=null, int $force=10, int $pvmax=200, int $nbPotions=0, String $miniature="./persos/default.png", String $portrait="./persos/default.png"){
         $this->nom = $nom;
         $this->arme = $arme;
         $this->armeSecondaire = $armeSecondaire;
@@ -71,26 +76,5 @@ class Perso{
             return new Action($this, "soin", "$this->nom utilise une potion et récupére ".$this->utiliserPotion()." points de vie.");
         }
         return new Action($this, "attaque", sprintf('%s attaque %s avec %s et inflige %d dégats',$this->nom, $cible->nom, $this->arme->nom, $this->attaque($cible)));       
-    }
-}
-
-class Armure{
-    public $nom;
-    public $niveau;
-
-    public function __construct(string $nom, int $niveau){
-        $this->nom = $nom;
-        $this->niveau=$niveau;
-    }
-}
-
-class Action{
-    public $perso;
-    public $type;
-    public $texte;
-    public function __construct(Perso $perso, String $type, String $texte){
-        $this->perso=$perso;
-        $this->type=$type;
-        $this->texte=$texte;
     }
 }
